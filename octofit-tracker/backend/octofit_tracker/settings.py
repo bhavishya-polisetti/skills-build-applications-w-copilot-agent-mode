@@ -11,6 +11,11 @@ DEBUG = os.environ.get('DJANGO_DEBUG', 'False').lower() in ('1', 'true', 'yes')
 # Default allowed hosts for local development; override via DJANGO_ALLOWED_HOSTS
 ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', '127.0.0.1,localhost,0.0.0.0').split(',')
 
+# If running in a GitHub Codespace, add the Codespace URL to allowed hosts
+# See .github/instructions/octofit_tracker_django_backend.instructions.md
+if os.environ.get('CODESPACE_NAME'):
+    ALLOWED_HOSTS.append(f"{os.environ.get('CODESPACE_NAME')}-8000.app.github.dev")
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
