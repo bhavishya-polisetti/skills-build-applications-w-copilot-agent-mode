@@ -5,9 +5,11 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'dev-secret-key')
-DEBUG = True
+# Default to False for safety; enable via env var DJANGO_DEBUG=1
+DEBUG = os.environ.get('DJANGO_DEBUG', 'False').lower() in ('1', 'true', 'yes')
 
-ALLOWED_HOSTS = ['*']
+# Default allowed hosts for local development; override via DJANGO_ALLOWED_HOSTS
+ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', '127.0.0.1,localhost,0.0.0.0').split(',')
 
 INSTALLED_APPS = [
     'django.contrib.admin',
